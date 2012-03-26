@@ -1,0 +1,9 @@
+Autotool project generator
+
+This small scripts will automatically generate autotools files (configure.ac, Makefile.am...).
+
+Usage:
+
+kproject_init.py: copy core kproject.conf file to current folder.
+kproject_gen.py: Find current folder for kproject.conf and generate autotool files.
+kproject_make_header.py: For generating header file in lib project.
