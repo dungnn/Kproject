@@ -36,6 +36,7 @@ class KLibProject(KAbstractProject):
         #pkg-config
         for pkg_name in self.pkg_config_libs:
             lib_name = pkg_name.replace('-', '_')
+            
             f.write('PKG_CHECK_MODULES([%s], [%s],,)\n' % (lib_name, pkg_name))
         f.write('\n')
 
