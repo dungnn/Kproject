@@ -8,6 +8,9 @@ def split(s):
     else:
         return re.split('\s+', ss)
 
+def strip_lib(s):
+    return re.sub('[^\w\-_\s]', '', s)
+
 def end_with(s, tail):
     return re.search("^.*\\.%s$" % tail, s)
 

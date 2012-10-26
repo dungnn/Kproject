@@ -16,10 +16,15 @@ class KExeProject(KAbstractProject):
         f = open('configure.ac', 'w')
         f.write('#Generate by kproject\n\n')
 
-        #Name, version
+        #Name, version, silence
         f.write('AC_INIT([%s], [%s])\n' % (configs['project']['name'], configs['project']['version']))
         f.write('AC_PREREQ([2.59])\n')
         f.write('AM_INIT_AUTOMAKE([1.08 no-define foreign])\n\n')
+
+        if (configs['project']['silent'] == 'yes'):
+            f.write('AM_SILENT_RULES([yes])\n')
+        else:
+            f.write('AM_SILENT_RULES([no])\n')
 
         #Prog compiler, install
         if configs['project']['compiler'] != 2:
@@ -31,7 +36,7 @@ class KExeProject(KAbstractProject):
 
         #pkg-config
         for pkg_name in self.pkg_config_libs:
-            lib_name = pkg_name.replace('-', '_')
+            lib_name = strip_lib(pkg_name.replace('-', '_'))
             f.write('PKG_CHECK_MODULES([%s], [%s],,)\n' % (lib_name, pkg_name))
 
         f.write('\n')
@@ -70,7 +75,7 @@ class KExeProject(KAbstractProject):
         #CPPFLAGS
         f.write('%s_CPPFLAGS =' % configs['project']['name'])
         for lib in self.pkg_config_libs:
-            f.write(' $(%s_CFLAGS)' % lib.replace('-', '_'))
+            f.write(' $(%s_CFLAGS)' % strip_lib(lib.replace('-', '_')))
 
         for cppflags in self.extra_cppflags:
             f.write(' %s' % cppflags)
@@ -85,7 +90,7 @@ class KExeProject(KAbstractProject):
         #LDADD
         f.write('%s_LDADD =' % configs['project']['name'])
         for lib in self.pkg_config_libs:
-            f.write(' $(%s_LIBS)' % lib.replace('-', '_'))
+            f.write(' $(%s_LIBS)' % strip_lib(lib.replace('-', '_')))
         
         for lib in self.extra_libs:
             f.write(' %s' % lib)

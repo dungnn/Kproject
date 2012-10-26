@@ -22,6 +22,12 @@ def load_configs():
         raise ValueError('Project type is not approriate: %s' % project_type)
     configs['project']['type'] = project_type
 
+    if not(config_parser.has_option('project', 'silent')):
+        silent_build = 'yes'
+    else:
+        silent_build = config_parser.get('project', 'silent', 'yes')
+    configs['project']['silent'] = silent_build
+
     project_version = config_parser.get('project', 'version')
     if not re.match('^(\d\.)*\d$', project_version):
         raise ValueError('Project version is not approriate: %s' % project_version)
