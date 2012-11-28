@@ -49,12 +49,12 @@ class KExeProject(KAbstractProject):
                 f.write('\n')
 
         #Debug
-        if configs['misc']['debug'] == 1:
-            fdebug = open(os.environ['KPROJECT_HOME'] + '/data/debug.ac')
-            f.write(fdebug.read())
-            fdebug.close()
+        #if configs['misc']['debug'] == 1:
+        #    fdebug = open(os.environ['KPROJECT_HOME'] + '/data/debug.ac')
+        #    f.write(fdebug.read())
+        #    fdebug.close()
 
-        f.write('\n')
+        #f.write('\n')
 
         #Finish
         f.write('AC_CONFIG_FILES([Makefile])\n')
